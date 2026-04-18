@@ -47,7 +47,7 @@
             const name = document.getElementById("name").value; 
             const teamA = document.getElementById("teamA").value;
             const toreA = Number(document.getElementById("toreA").value);
-            const teamB = document.getElementById("teamB").value; // Korrigiert: Klammer entfernt
+            const teamB = document.getElementById("teamB").value;
             const toreB = Number(document.getElementById("toreB").value); 
 
             if(!name) { alert("Bitte Namen eingeben!"); return; }
@@ -69,7 +69,7 @@
                 return; 
             } 
 
-            document.getElementById("ausgabe").innerHTML = "✅ Tipp gespeichert!"; 
+            document.getElementById("ausgabe").innerHTML = "Tipp gespeichert!"; 
             await laden(); 
         } 
 
@@ -77,7 +77,7 @@
             const { data, error } = await supabase 
                 .from("tipps") 
                 .select("*") 
-                .order("id", { ascending: false }); // "false" zeigt die neuesten Tipps oben
+                .order("id", { ascending: false }); //von true auf false damit es oben passiert
 
             if (error) { 
                 document.getElementById("ausgabe").innerHTML = "Fehler beim Laden: " + error.message; 
@@ -98,11 +98,11 @@
             document.getElementById("ausgabe").innerHTML = html; 
         } 
 
-        // Funktionen global verfügbar machen
+       
         window.speichern = speichern; 
         window.laden = laden; 
 
-        // Initiales Laden beim Start
+        
         laden(); 
     </script> 
 </body> 
