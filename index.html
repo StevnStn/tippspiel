@@ -17,17 +17,21 @@
         <label>Dein Name:</label><br>
         <input type="text" id="name" placeholder="z.B. Max"><br><br> 
 
-        <label>Team A:</label><br> 
-        <input type="text" id="teamA" value="Deutschland"><br><br> 
+<label>Paarung auswählen:</label><br>
+<select id="matchSelection">
+    <option value="Deutschland vs. USA">Achtelfinale 1: Deutschland vs. USA (Beispiel)</option>
+    <option value="Spanien vs. Brasilien">Achtelfinale 2: Spanien vs. Brasilien (Beispiel)</option>
+    <option value="Argentinien vs. Frankreich">Achtelfinale 3: Argentinien vs. Frankreich (Beispiel)</option>
+    <option value="England vs. Italien">Achtelfinale 4: England vs. Italien (Beispiel)</option>
+</select>
+<br><br>
 
-        <label>Tore Team A:</label><br> 
-        <input type="number" id="toreA" min="0"><br><br> 
-
-        <label>Team B:</label><br> 
-        <input type="text" id="teamB" value="Frankreich"><br><br> 
-
-        <label>Tore Team B:</label><br> 
-        <input type="number" id="toreB" min="0"><br><br> 
+<label>Tore Team A:</label> 
+<input type="number" id="toreA" min="0" value="0">
+<span> : </span>
+<input type="number" id="toreB" min="0" value="0">
+<label>Tore Team B</label>
+<br><br>
 
         <button onclick="speichern()">Tipp speichern</button> 
         <button onclick="laden()">Tipps aktualisieren</button> 
@@ -44,25 +48,30 @@
         const supabase = createClient(supabaseUrl, supabaseKey);  
 
         async function speichern() { 
-            const name = document.getElementById("name").value; 
-            const teamA = document.getElementById("teamA").value;
-            const toreA = Number(document.getElementById("toreA").value);
-            const teamB = document.getElementById("teamB").value;
-            const toreB = Number(document.getElementById("toreB").value); 
+        const name = document.getElementById("name").value; 
+        const matchValue = document.getElementById("matchSelection").value; // "Deutschland vs. USA"
+    
+        // Team A split (vs) TeamB
+        const teams = matchValue.split(" vs. ");
+        const teamA = teams[0];
+        const teamB = teams[1];
 
-            if(!name) { alert("Bitte Namen eingeben!"); return; }
+        const toreA = Number(document.getElementById("toreA").value);
+        const toreB = Number(document.getElementById("toreB").value); 
 
-            const { error } = await supabase 
-                .from("tipps") 
-                .insert([ 
-                    { 
-                        name: name, 
-                        team_a: teamA,
-                        tore_a: toreA, 
-                        team_b: teamB,
-                        tore_b: toreB 
-                    } 
-                ]); 
+        if(!name) { alert("Bitte Namen eingeben!"); return; }
+
+        const { error } = await supabase 
+            .from("tipps") 
+            .insert([ 
+                { 
+                    name: name, 
+                    team_a: teamA,
+                    tore_a: toreA, 
+                    team_b: teamB,
+                    tore_b: toreB 
+                } 
+               ]);
 
             if (error) { 
                 document.getElementById("ausgabe").innerHTML = "Fehler beim Speichern: " + error.message; 
