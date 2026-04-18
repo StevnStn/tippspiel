@@ -11,7 +11,7 @@
 </head> 
 <body> 
 
-    <h1>🏆 WM 2026 Tippspiel</h1> 
+    <h1>WM 2026 Tippspiel</h1> 
     
     <div class="match-input">
         <label>Dein Name:</label><br>
@@ -50,7 +50,7 @@
 
     function updateLabels() {
         const select = document.getElementById("matchSelection");
-        const matchValue = select.value; // z.B. "Deutschland vs. USA"
+        const matchValue = select.value; // Deutschland vs. USA
         
         const teams = matchValue.split(" vs. ");
         
@@ -60,18 +60,18 @@
         }
     }
 
-    // Damit die Namen auch direkt beim Laden der Seite stimmen:
+    // Laden
         window.addEventListener('DOMContentLoaded', updateLabels);
 
-        window.updateLabels = updateLabels;
+        window.updateLabels = updateLabels; //St Version
 
         async function speichern() { 
         const name = document.getElementById("name").value; 
-        const matchValue = document.getElementById("matchSelection").value; // "Deutschland vs. USA"
+        const matchValue = document.getElementById("matchSelection").value; // Deutschland vs. USA
     
         // Team A split (vs) TeamB
         const teams = matchValue.split(" vs. ");
-        const teamA = teams[0];
+        const teamA = teams[0];    
         const teamB = teams[1];
 
         const toreA = Number(document.getElementById("toreA").value);
