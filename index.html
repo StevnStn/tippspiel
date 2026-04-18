@@ -34,13 +34,6 @@
 </div>
 <br><br>
 
-<label>Tore Team A:</label> 
-<input type="number" id="toreA" min="0" value="0"><br>
-<br><br>
-<br><label>Tore Team B</label>
-<input type="number" id="toreB" min="0" value="0">
-<br>
-
         <button onclick="speichern()">Tipp speichern</button> 
         <button onclick="laden()">Tipps aktualisieren</button> 
     </div>
@@ -55,17 +48,22 @@
         const supabaseKey = "sb_publishable_ldNwvpKpJ3mO0GdMcJaCnw_LGSKwDTK"; 
         const supabase = createClient(supabaseUrl, supabaseKey);  
 
-        function updateLabels() {
-    const matchValue = document.getElementById("matchSelection").value; // z.B. "Deutschland vs. USA"
-    const teams = matchValue.split(" vs. "); // Teilt den String am " vs. "
-    
-    // Jetzt setzen wir die Namen in die Labels ein
-    document.getElementById("labelTeamA").innerText = teams[0];
-    document.getElementById("labelTeamB").innerText = teams[1];
-}
+    function updateLabels() {
+        const select = document.getElementById("matchSelection");
+        const matchValue = select.value; // z.B. "Deutschland vs. USA"
+        
+        const teams = matchValue.split(" vs. ");
+        
+        if (teams.length === 2) {
+            document.getElementById("labelTeamA").innerText = teams[0];
+            document.getElementById("labelTeamB").innerText = teams[1];
+        }
+    }
 
-// Damit die Namen auch direkt beim Laden der Seite stimmen:
-window.addEventListener('DOMContentLoaded', updateLabels);
+    // Damit die Namen auch direkt beim Laden der Seite stimmen:
+        window.addEventListener('DOMContentLoaded', updateLabels);
+
+        window.updateLabels = updateLabels;
 
         async function speichern() { 
         const name = document.getElementById("name").value; 
