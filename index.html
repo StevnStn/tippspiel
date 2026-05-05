@@ -160,14 +160,15 @@
         // 3. In die Tabelle "tipps" einfügen
         const { error } = await supabase
             .from("tipps") 
-            .insert([{
+            .upsert([{
                 name: name,
                 id: spielID,
                 team_a: teamA,
                 team_b: teamB,
                 tore_a: toreA,
                 tore_b: toreB
-            }]);
+            },
+                     {onConflict: 'name, "id"'}]);
 
         if (error) {
             alert("Fehler beim Speichern: " + error.message);
